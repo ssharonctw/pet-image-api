@@ -4,10 +4,12 @@ import axios from "axios";
 import React,{useState, useEffect, useCallback} from 'react';
 import {useDropzone} from 'react-dropzone'
 
+
+
 //a functional component
 const UserProfiles = () =>{
 
-const[userProfiles, setUserProfiles] = useState([])
+  const[userProfiles, setUserProfiles] = useState([])
 
   const fetchUserProfiles=()=>{
     axios.get("http://localhost:8080/api/v1/user-profile").then(res=>{
@@ -27,6 +29,10 @@ const[userProfiles, setUserProfiles] = useState([])
       {userProfile.userProfileId? (
         <img 
           src={`http://localhost:8080/api/v1/user-profile/${userProfile.userProfileId}/image/download`} 
+          onError={({ currentTarget }) => {
+            currentTarget.onerror = null; // prevents looping
+            currentTarget.src="https://raw.githubusercontent.com/ssharonctw/pet-image-api/master/document/cat1.jpg";
+          }}
         />) : null}
       {/**todo: profile image */}
       <br/>
@@ -48,6 +54,9 @@ function MyDropzone({userProfileId}) {
     //append the file to formData to be send to backend
     const formData = new FormData();
     formData.append("file", file);
+
+    //dropfile
+    //setFileDroped(fileDropped+1);
 
     axios.post(
       `http://localhost:8080/api/v1/user-profile/${userProfileId}/image/upload`,
@@ -79,6 +88,8 @@ function MyDropzone({userProfileId}) {
 }
 
 function App() {
+  //const[fileDropped, setFileDroped] = useState(0)
+
   return (
     <div className="App">
       <UserProfiles />
