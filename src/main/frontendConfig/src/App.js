@@ -32,7 +32,7 @@ const[userProfiles, setUserProfiles] = useState([])
       <br/>
       <br/>
       <h1>{userProfile.username}</h1>
-      <p>{userProfile.userProfileId}</p>
+      {/**<p>{userProfile.userProfileId}</p>*/}
       <MyDropzone {...userProfile}/>
       <br/>
     </div>
